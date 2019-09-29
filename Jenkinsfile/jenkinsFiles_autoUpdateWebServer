@@ -1,0 +1,54 @@
+#!groovy
+
+pipeline{
+  
+  agent{
+    label 'weberServer'
+  }
+  
+  parameters{
+    string(name: 'slackChannel',defaultValue: 'Messi', description: '')
+    string(name: 'reponame',defaultValue: 'Messi', description: '')
+  }
+  
+  stages{
+    
+    stage('Notify slack to start backup job'){
+      steps{
+        slackSend channel: "$slackChannel", color: "good", message: "Job start ${JOB_NAME}"
+      }
+    }
+
+    stage('Check parameters'){
+      steps{
+        sh './script/checkParameter.sh -xe $slackChannel'
+      }
+    }
+    
+    stage('update'){
+      steps{
+        sh './script/gitPull.sh -xe $reponame'
+      }
+    }
+  }
+  
+  post{
+    
+    always{
+      slackSend channel: "$slackChannel", color: "good", message: "Job Finish ${JOB_NAME}"
+    }
+      
+    success{
+      slackSend channel: "$slackChannel", color: 'good', message: "Job Success ${JOB_NAME}"
+    }
+    
+    failure{
+      slackSend channel: "$slackChannel", color: "danger", message: "Job Failure ${JOB_NAME}"
+    }
+    
+    aborted{
+      slackSend channel: "$slackChannel", color: "warning", message: "Job Aborted ${JOB_NAME}"
+    }
+    
+  }
+}

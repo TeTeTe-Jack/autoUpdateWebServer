@@ -3,7 +3,7 @@
 pipeline{
   
   agent{
-    label 'weberServer'
+    label 'WebServer'
   }
   
   parameters{

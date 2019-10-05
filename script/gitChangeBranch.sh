@@ -21,6 +21,6 @@ else
 fi
 
 # change branch
-git checkout -b ${changeBranch}
+git checkout ${changeBranch}
 
 exit 0

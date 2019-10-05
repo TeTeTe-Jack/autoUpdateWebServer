@@ -21,6 +21,6 @@ else
 fi
 
 # change branch
-git checkout ${changeBranch}
+git checkout -b ${changeBranch} remotes/origin/${changeBranch}
 
 exit 0

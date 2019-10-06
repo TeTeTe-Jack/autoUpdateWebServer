@@ -25,12 +25,6 @@ pipeline{
         sh './script/checkParameter.sh -xe $reponame'
       }
     }
-
-    stage('update'){
-      steps{
-        sh './script/gitPull.sh -xe $reponame'
-      }
-    }
     
     stage('change branch'){
       steps{

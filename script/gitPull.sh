@@ -14,7 +14,7 @@ cd ~/$arg
 git checkout master
 git pull origin master
 git checkout develop
-git pull origin deveop
+git pull origin develop
 git checkout master
 
 exit 0
